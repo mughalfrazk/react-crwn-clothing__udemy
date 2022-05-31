@@ -1,0 +1,64 @@
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAQPQoh7_2NFq-c3rx0B1TkhhcYqGK9Lq4',
+  authDomain: 'crwn-clothing-db-61610.firebaseapp.com',
+  projectId: 'crwn-clothing-db-61610',
+  storageBucket: 'crwn-clothing-db-61610.appspot.com',
+  messagingSenderId: '969676322886',
+  appId: '1:969676322886:web:5e8418aedb597efcffb247',
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
+
+export const auth = getAuth();
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+  if (!userAuth) return;
+
+  const userDocRef = doc(db, 'users', userAuth.uid);
+
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log('error creating the user', error.message);
+    }
+  }
+
+  return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  createUserWithEmailAndPassword(auth, email, password);
+};

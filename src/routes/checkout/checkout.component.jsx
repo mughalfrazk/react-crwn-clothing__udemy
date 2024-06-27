@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import {
   selectCartItems,
   selectCartTotal,
-} from '../../redux/cart/cart.selector.js';
+} from '../../redux/cart/cart.selector';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+import PaymentForm from '../../components/payment-form/payment-form.component';
 import './checkout.styles.scss';
-import PaymentForm from '../../components/payment-form/payment-form.component.jsx';
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);

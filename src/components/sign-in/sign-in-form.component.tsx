@@ -1,9 +1,5 @@
-import { useState, useContext } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-import {
-  signInWithGooglePopup,
-  signInAuthWithEmailAndPassword,
-} from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import './sign-in-form.styles.scss';
@@ -23,7 +19,7 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
@@ -36,13 +32,13 @@ const SignInForm = () => {
     dispatch(googleSigninStart());
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      alert(error.code);
+      // alert(error.code);
       console.log('Error creating user with email/password: ', error);
     }
   };

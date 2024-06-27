@@ -1,0 +1,19 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Manchester",
+			"country": {
+				"code": "GB",
+				"name": "United Kingdom"
+			},
+			"subdivision": {
+				"code": "ENG",
+				"name": "England"
+			},
+			"timezone": "Europe/London",
+			"latitude": 53.481,
+			"longitude": -2.2367
+		},
+		"timestamp": 1719269133871
+	}
+}
